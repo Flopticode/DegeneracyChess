@@ -1,0 +1,76 @@
+{
+	"figures": [
+		{
+			"identifier": "ROOK",
+			"name": "rook",
+			"images": {
+				"white": "./images/figures/w/rook.png",
+				"black": "./images/figures/b/rook.png",
+				"asian": "./images/figures/a/rook.png"
+			}
+		},
+		{
+			"identifier": "PAWN",
+			"name": "pawn",
+			"images": {
+				"white": "./images/figures/w/pawn.png",
+				"black": "./images/figures/b/pawn.png",
+				"asian": "./images/figures/a/pawn.png"
+			}
+		},
+		{
+			"identifier": "BISHOP",
+			"name": "bishop",
+			"images": {
+				"white": "./images/figures/w/bishop.png",
+				"black": "./images/figures/b/bishop.png",
+				"asian": "./images/figures/a/bishop.png"
+			}
+		},
+		{
+			"identifier": "KNIGHT",
+			"name": "knight",
+			"images": {
+				"white": "./images/figures/w/knight.png",
+				"black": "./images/figures/b/knight.png",
+				"asian": "./images/figures/a/knight.png"
+			}
+		},
+		{
+			"identifier": "MAXWELL",
+			"name": "maxwell",
+			"images": {
+				"white": "./images/figures/w/maxwell.png",
+				"black": "./images/figures/b/maxwell.png",
+				"asian": "./images/figures/a/maxwell.png"
+			}
+		},
+		{
+			"identifier": "DEBUSSY",
+			"name": "debussy",
+			"images": {
+				"white": "./images/figures/w/debussy.png",
+				"black": "./images/figures/b/debussy.png",
+				"asian": "./images/figures/a/debussy.png"
+			}
+		},
+		{
+			"identifier": "SYSTEM_INTEGRATOR",
+			"name": "system integrator",
+			"images": {
+				"white": "./images/figures/w/system_integrator.png",
+				"black": "./images/figures/b/system_integrator.png",
+				"asian": "./images/figures/a/system_integrator.png"
+			}
+		},
+		{
+			"identifier": "QUEEN",
+			"name": "queen",
+			"images": {
+				"white": "./images/figures/w/queen.png",
+				"black": "./images/figures/b/queen.png",
+				"asian": "./images/figures/a/queen.png"
+			}
+		}
+	]
+}
