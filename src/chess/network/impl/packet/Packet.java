@@ -2,32 +2,42 @@ package chess.network.impl.packet;
 
 import chess.network.Serializable;
 import chess.network.impl.exception.InvalidMessageException;
+import chess.network.impl.packet.packets.GameStatusPacket;
+import chess.network.impl.packet.packets.JoinLobbyPacket;
+import chess.network.impl.packet.packets.MovePacket;
+import chess.network.impl.packet.packets.StartGamePacket;
+
+import java.lang.reflect.InvocationTargetException;
 
 public interface Packet extends Serializable
 {
 	public static boolean isType(int type)
 	{
-		return type == JoinLobbyPacket.TYPE_SPEC
-				|| type == MovePacket.TYPE_SPEC
-				|| type == GameStatusPacket.TYPE_SPEC
-				|| type == StartGamePacket.TYPE_SPEC;
+		return PacketRegistry.getClass(type) != null;
 	}
 	public static Packet create(int type, String data) throws InvalidMessageException
 	{
-		switch(type)
+		Class<? extends AbstractPacket> clazz = PacketRegistry.getClass(type);
+
+		if(clazz == null)
+			throw new IllegalArgumentException("A packet type " + type + " does not exist.");
+
+		try
 		{
-		case JoinLobbyPacket.TYPE_SPEC:
-			return new JoinLobbyPacket(data);
-		case MovePacket.TYPE_SPEC:
-			return new MovePacket(data);
-		case GameStatusPacket.TYPE_SPEC:
-			return new GameStatusPacket(data);
-		case StartGamePacket.TYPE_SPEC:
-			return new StartGamePacket();
-		default:
-			throw new IllegalArgumentException("Invalid type specification " + type);
+			return clazz.getConstructor(String.class).newInstance(data);
 		}
+		catch (InstantiationException | IllegalAccessException | NoSuchMethodException e)
+		{
+			new RuntimeException("Some idiot implemented the " + clazz.getName() + " class wrong. Tip: You should strongly consider adding correct constructors in the future...").printStackTrace();
+			e.printStackTrace();
+			System.out.println("\n\n");
+		}
+		catch(InvocationTargetException e)
+		{
+			new RuntimeException("Package constructor threw an Exception.").printStackTrace();
+			e.getCause().printStackTrace();
+			System.out.println("\n\n");
+		}
+		return null;
 	}
-	
-	public int getType();
 }

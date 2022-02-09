@@ -156,6 +156,14 @@ public abstract class Client
     public void close()
     {
         messageHandler.close();
+        messageHandler = null;
+    }
+
+    public void connect(String pServerIP, int pServerPort)
+    {
+        if(messageHandler != null)
+            throw new IllegalStateException("Cannot connect while connected.");
+        messageHandler = new MessageHandler(pServerIP, pServerPort);
     }
 
     public abstract void processMessage(String pMessage);

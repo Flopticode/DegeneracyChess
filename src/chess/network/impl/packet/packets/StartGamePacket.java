@@ -1,31 +1,25 @@
-package chess.network.impl.packet;
+package chess.network.impl.packet.packets;
 
 import chess.network.impl.exception.InvalidMessageException;
+import chess.network.impl.packet.AbstractPacket;
+import chess.network.impl.packet.PacketWriter;
+import chess.network.impl.packet.PreGamePacket;
 
 public class StartGamePacket extends AbstractPacket implements PreGamePacket
 {
-	public static final int TYPE_SPEC = 2;
-	public static final int BYTE_LEN = 0;
-	
 	public StartGamePacket(String str) throws InvalidMessageException
 	{
-		super(BYTE_LEN, str);
+
 	}
 	public StartGamePacket()
 	{
 		
 	}
-	
-	@Override
-	public int getType()
-	{
-		return TYPE_SPEC;
-	}
 
 	@Override
 	public String serialize()
 	{
-		return "";
+		return new PacketWriter(this).build();
 	}
 
 }

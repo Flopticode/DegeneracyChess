@@ -1,0 +1,942 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": false, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root node is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "chess.ChessGame"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_109627663 { 
+   	label=sound
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   SoundManager333601953[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SoundManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ play()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1218719169 { 
+   	label=listeners
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   BoardChangedListener1883419439[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)BoardChangedListener</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ notify(board: Board, x: short, y: short, newType: Figure)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+FigureMovedListener1883419439[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)FigureMovedListener</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onFigureMoved(figX: short, figY: short, tarX: short, tarY: short, figure: Figure)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+StatusEffectAddedListener1883419439[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)StatusEffectAddedListener</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ notify(statusEffect: StatusEffect)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+StatusEffectRemovedListener1883419439[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)StatusEffectRemovedListener</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ notify(statusEffect: StatusEffect)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+} 
+
+subgraph cluster_1274639644 { 
+   	label=figure
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   AbstractFigure1373596050[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractFigure</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   board: Board [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   color: FigureColor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   dryState: short [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   type: FigureType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   x: short [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   y: short [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ canJoinkFigureType(type: FigureType): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ destroy()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dry(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ move(direction: Direction, distance: short)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onDeath()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selfJoink()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AbstractInteractingFigure1373596050[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)AbstractInteractingFigure</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ interact(fig: Figure): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInInteractionRange(tarX: short, tarY: short): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+DiagonalReach1373596050[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)DiagonalReach</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ canReachDiagonally(board: Board, activeColor: FigureColor, figX: short, figY: short, tarX: short, tarY: short, maxLen: short, pCTL: boolean, pCTR: boolean, pCBL: boolean, pCBR: boolean, canJoinkFigure: boolean, mustJoinkFigure: boolean): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+Figure1373596050[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)Figure</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ canJoinkFigureType(type: FigureType): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ destroy()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dry(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getColor(): FigureColor</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getDryState(): short</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getType(): FigureType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getX(): short</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getY(): short</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ move(direction: Direction, distance: short)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onDeath()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selfJoink()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setColor(color: FigureColor)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setData(figure: Figure)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+FigureType1373596050[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FigureType</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   factory: FigureFactory [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   identifier: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   images: FigureImageSet [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nameStr: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createNew(board: Board, color: FigureColor, x: short, y: short): Figure</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+StraightReach1373596050[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)StraightReach</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ canReachStraight(board: Board, activeColor: FigureColor, figX: short, figY: short, tarX: short, tarY: short, maxLen: short, pCL: boolean, pCR: boolean, pCT: boolean, pCB: boolean, allowJoinkFigure: boolean, mustJoinkFigure: boolean): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+subgraph cluster_1240446715 { 
+   	label=figures
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Bishop447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Bishop</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Debussy447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Debussy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ interact(figure: Figure): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInInteractionRange(tarX: short, tarY: short): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Knight447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Knight</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Maxwell447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Maxwell</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   focussedFigure: Figure [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ canJoinkFigureType(type: FigureType): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ interact(fig: Figure): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInDryRange(x: short, y: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInInteractionRange(tarX: short, tarY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onDeath()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onFigureMoved(x: short, y: short, tarX: short, tarY: short, fig: Figure)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selfJoink()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Pawn447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Pawn</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Queen447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Queen</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Rook447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Rook</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ isInMovementRange(tarX: short, tarY: short): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SystemIntegrator447650227[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SystemIntegrator</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+subgraph cluster_1698608125 { 
+   	label=statuseffect
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_308468027 { 
+   	label=board
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   AbstractStatusEffect1760371433[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AbstractStatusEffect</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   renderer: StatusEffectRenderer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   type: StatusEffectType [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LightUnpluggedStatusEffect1760371433[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LightUnpluggedStatusEffect</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   timeRemain: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+StatusEffect1760371433[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)StatusEffect</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getRenderer(): StatusEffectRenderer</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getType(): StatusEffectType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hasEnded(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+} 
+} 
+
+subgraph cluster_1839654540 { 
+   	label=rendering
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1501592941 { 
+   	label=client
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   BoardRenderer1739756389[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BoardRenderer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   board: Board [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   chessRenderer: ChessRenderer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isLightUnplugged: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- getImage(figure: Figure): Image</TD></TR>
+<TR><TD ALIGN="LEFT" >- onBoardChanged(board: Board, x: short, y: short, fig: Figure)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onBoardStatusEffectAdded(statusEffect: StatusEffect)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onBoardStatusEffectRemoved(statusEffect: StatusEffect)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ pixelToBoardCoords(pixelX: int, pixelY: int): Point</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >- renderCell(g: Graphics, x: short, y: short, figure: Figure)</TD></TR>
+<TR><TD ALIGN="LEFT" >- updateLightUnplugged()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ChessGUI1739756389[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ChessGUI</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   game: ChessGame [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lastPressedPt: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   renderer: ChessRenderer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ mouseClicked(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseEntered(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseExited(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mousePressed(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseReleased(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paintComponent(g: Graphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ChessRenderer1739756389[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ChessRenderer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   boardRenderer: BoardRenderer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   effectTableRenderer: EffectTableRenderer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ paintComponent(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ requestSize(w: int, h: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ClientGUI1897102653[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ClientGUI</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   client: ChessClient [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   clientMenu: Menu [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   game: ChessGame [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ initGame()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paintComponent(g: Graphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EffectTableRenderer1739756389[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EffectTableRenderer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   board: Board [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ render(g: Graphics)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+StatusEffectRenderer1739756389[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)StatusEffectRenderer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   icon: Image [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   statusEffect: StatusEffect [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- createIcon(type: StatusEffectType): Image</TD></TR>
+<TR><TD ALIGN="LEFT" >- getIcon(type: StatusEffectType): Image</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render(g: Graphics, x: int, y: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1772445823 { 
+   	label=menu
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   ClientMenu1696471446[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ClientMenu</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   client: ChessClient [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onClick(data: ClickData)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainMenu84348881[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainMenu</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- onLocalGameClicked(data: ClickData)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onMultiplayerClicked(data: ClickData)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startClient(serverAddr: NetworkAddress, preferredColor: FigureColor)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startLocal()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startServer()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Menu139615269[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Menu</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   elements: List&lt;MenuElement&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   onOpenListeners: List&lt;OpenListener&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   openMenu: Menu [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   openedBy: Menu [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   subMenus: Map&lt;String, Menu&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ add(e: MenuElement)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addMenu(name: String, subMenu: Menu)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addOpenListener(openListener: OpenListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ close()</TD></TR>
+<TR><TD ALIGN="LEFT" >- fireOpenListeners()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseClicked(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseDragged(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseEntered(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseExited(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseMoved(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mousePressed(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseReleased(evt: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ openMenu(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paint(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ remove(e: MenuElement)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeMenu(name: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeOpenListener(openListener: OpenListener)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ServerClientSelection84348881[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ServerClientSelection</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- onClientClicked(data: ClickData)</TD></TR>
+<TR><TD ALIGN="LEFT" >- onServerClicked(data: ClickData)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+subgraph cluster_1843485230 { 
+   	label=network
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1941768614 { 
+   	label=api
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Client768600980[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Client</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   messageHandler: MessageHandler [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ close()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processMessage(pMessage: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ send(message: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Server768600980[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Server</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   connectionHandler: NewConnectionHandler [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   messageHandlers: List&lt;ClientMessageHandler&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- addNewClientMessageHandler(pClientSocket: Socket)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ close()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ closeConnection(pClientIP: String, pClientPort: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >- findClientMessageHandler(pClientIP: String, pClientPort: int): ClientMessageHandler</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isConnectedTo(pClientIP: String, pClientPort: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processClosingConnection(pClientIP: String, pClientPort: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processMessage(pClientIP: String, pClientPort: int, pMessage: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processNewConnection(pClientIP: String, pClientPort: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >- removeClientMessageHandler(pClientMessageHandler: ClientMessageHandler)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ send(pClientIP: String, pClientPort: int, pMessage: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sendToAll(pMessage: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_65049120 { 
+   	label=impl
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   ChessClient1666431915[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ChessClient</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   gui: ClientGUI [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- handleGameStatusPacket(pck: GameStatusPacket)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processMessage(pMessage: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- sendPacket(pck: Packet)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sendStartGamePacket()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LobbyHandler133392053[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LobbyHandler</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   clientColors: Map&lt;NetworkAddress, FigureColor&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   game: ChessGame [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gameStarted: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   host: NetworkAddress [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   server: Server [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- broadcastPacket(p: Packet)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dejoin(addr: NetworkAddress): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- generateID(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- getClient(na: NetworkAddress): NetworkAddress</TD></TR>
+<TR><TD ALIGN="LEFT" >- getClientColor(addr: NetworkAddress): FigureColor</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleMovePacket(addr: NetworkAddress, pck: MovePacket): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handlePacket(addr: NetworkAddress, p: Packet): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleStartGamePacket(addr: NetworkAddress, pck: StartGamePacket): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isClient(addr: NetworkAddress): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ join(addr: NetworkAddress, color: FigureColor): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LobbyManagementServer133392053[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LobbyManagementServer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   freeLobby: LobbyHandler [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gui: ServerGUI [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lobbyHandlers: List&lt;LobbyHandler&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- createNewLobby(): LobbyHandler</TD></TR>
+<TR><TD ALIGN="LEFT" >- findClientLobby(addr: NetworkAddress): LobbyHandler</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processClosingConnection(pClientIP: String, pClientPort: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processMessage(pClientIP: String, pClientPort: int, pMessage: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processNewConnection(pClientIP: String, pClientPort: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+subgraph cluster_94627584 { 
+   	label=chess
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Board94627584[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Board</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   beatenFigures: List&lt;Figure&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   board: Figure[][] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   changedListeners: List&lt;BoardChangedListener&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   game: ChessGame [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   movedListeners: List&lt;FigureMovedListener&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   statusEffectAddedListeners: List&lt;StatusEffectAddedListener&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   statusEffectRemovedListeners: List&lt;StatusEffectRemovedListener&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   statusEffects: LinkedList&lt;StatusEffect&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addChangedListener(listener: BoardChangedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addFigureMovedListener(listener: FigureMovedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addStatusEffect(statusEffect: StatusEffect)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addStatusEffectAddedListener(listener: StatusEffectAddedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addStatusEffectRemovedListener(listener: StatusEffectRemovedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearStatusEffects()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ destroyFigure(x: short, y: short)</TD></TR>
+<TR><TD ALIGN="LEFT" >- fireChangedListeners(board: Board, x: short, y: short, newFig: Figure)</TD></TR>
+<TR><TD ALIGN="LEFT" >- fireFigureMovedListeners(x: short, y: short, tX: short, tY: short, fig: Figure)</TD></TR>
+<TR><TD ALIGN="LEFT" >- fireStatusEffectAddedListeners(statusEffect: StatusEffect)</TD></TR>
+<TR><TD ALIGN="LEFT" >- fireStatusEffectRemovedListeners(statusEffect: StatusEffect)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getColorAt(x: short, y: short): FigureColor</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFigureAt(x: short, y: short): Figure</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFiguresInRadius(cX: short, cY: short, radius: short): LinkedList&lt;Figure&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPawnBaseIndex(color: FigureColor): Short</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hasStatusEffect(type: StatusEffectType): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ interact(x: short, y: short, tX: short, tY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isFigureAt(x: short, y: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInBounds(x: short, y: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isValidMove(activeColor: FigureColor, figureX: short, figureY: short, targetX: short, targetY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ move(activeColor: FigureColor, figureX: short, figureY: short, targetX: short, targetY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeChangedListener(listener: BoardChangedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeFigureMovedListener(listener: FigureMovedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeStatusEffectAddedListener(listener: StatusEffectAddedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeStatusEffectRemovedListener(listener: StatusEffectRemovedListener)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tick()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ChessGame94627584[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ChessGame</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   activeColor: FigureColor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   board: Board [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gui: ChessGUI [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   soundManager: SoundManager [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ endTurn()</TD></TR>
+<TR><TD ALIGN="LEFT" >- interact(x: short, y: short, tX: short, tY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- move(x: short, y: short, tX: short, tY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tryInteract(x: short, y: short, tX: short, tY: short): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tryMove(figX: short, figY: short, tarX: short, tarY: short): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+AbstractFigure1373596050 -> Bishop447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFigure1373596050 -> Board94627584[label="board
+[0..1]"];
+AbstractFigure1373596050 -> FigureType1373596050[label="type
+[0..1]"];
+AbstractFigure1373596050 -> Knight447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFigure1373596050 -> Maxwell447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFigure1373596050 -> Pawn447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFigure1373596050 -> Queen447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractFigure1373596050 -> Rook447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractInteractingFigure1373596050 -> Maxwell447650227[arrowhead=none, arrowtail=empty, dir=both];
+AbstractStatusEffect1760371433 -> LightUnpluggedStatusEffect1760371433[arrowhead=none, arrowtail=empty, dir=both];
+AbstractStatusEffect1760371433 -> StatusEffectRenderer1739756389[label="renderer
+[0..1]"];
+Bishop447650227 -> Debussy447650227[arrowhead=none, arrowtail=empty, dir=both];
+Board94627584 -> BoardChangedListener1883419439[label="changedListeners
+[0..*]"];
+Board94627584 -> ChessGame94627584[label="game
+[0..1]"];
+Board94627584 -> Figure1373596050[label="beatenFigures
+[0..*]"];
+Board94627584 -> Figure1373596050[label="board
+[0..*]"];
+Board94627584 -> FigureMovedListener1883419439[label="movedListeners
+[0..*]"];
+Board94627584 -> StatusEffect1760371433[label="statusEffects
+[0..*]"];
+Board94627584 -> StatusEffectAddedListener1883419439[label="statusEffectAddedListeners
+[0..*]"];
+Board94627584 -> StatusEffectRemovedListener1883419439[label="statusEffectRemovedListeners
+[0..*]"];
+BoardRenderer1739756389 -> Board94627584[label="board
+[0..1]"];
+BoardRenderer1739756389 -> ChessRenderer1739756389[label="chessRenderer
+[0..1]"];
+ChessClient1666431915 -> ClientGUI1897102653[label="gui
+[0..1]"];
+ChessGUI1739756389 -> ChessGame94627584[label="game
+[0..1]"];
+ChessGUI1739756389 -> ChessRenderer1739756389[label="renderer
+[0..1]"];
+ChessGame94627584 -> Board94627584[label="board
+[0..1]"];
+ChessGame94627584 -> ChessGUI1739756389[label="gui
+[0..1]"];
+ChessGame94627584 -> SoundManager333601953[label="soundManager
+[0..1]"];
+ChessRenderer1739756389 -> BoardRenderer1739756389[label="boardRenderer
+[0..1]"];
+ChessRenderer1739756389 -> EffectTableRenderer1739756389[label="effectTableRenderer
+[0..1]"];
+Client768600980 -> ChessClient1666431915[arrowhead=none, arrowtail=empty, dir=both];
+ClientGUI1897102653 -> ChessClient1666431915[label="client
+[0..1]"];
+ClientGUI1897102653 -> ChessGame94627584[label="game
+[0..1]"];
+ClientGUI1897102653 -> Menu139615269[label="clientMenu
+[0..1]"];
+ClientMenu1696471446 -> ChessClient1666431915[label="client
+[0..1]"];
+DiagonalReach1373596050 -> Bishop447650227[arrowhead=none, arrowtail=empty, dir=both];
+DiagonalReach1373596050 -> Maxwell447650227[arrowhead=none, arrowtail=empty, dir=both];
+DiagonalReach1373596050 -> Pawn447650227[arrowhead=none, arrowtail=empty, dir=both];
+DiagonalReach1373596050 -> Queen447650227[arrowhead=none, arrowtail=empty, dir=both];
+EffectTableRenderer1739756389 -> Board94627584[label="board
+[0..1]"];
+Figure1373596050 -> AbstractFigure1373596050[arrowhead=none, arrowtail=empty, dir=both];
+Knight447650227 -> SystemIntegrator447650227[arrowhead=none, arrowtail=empty, dir=both];
+LobbyHandler133392053 -> ChessGame94627584[label="game
+[0..1]"];
+LobbyHandler133392053 -> Server768600980[label="server
+[0..1]"];
+LobbyManagementServer133392053 -> LobbyHandler133392053[label="freeLobby
+[0..1]"];
+LobbyManagementServer133392053 -> LobbyHandler133392053[label="lobbyHandlers
+[0..*]"];
+Maxwell447650227 -> Figure1373596050[label="focussedFigure
+[0..1]"];
+Menu139615269 -> ClientMenu1696471446[arrowhead=none, arrowtail=empty, dir=both];
+Menu139615269 -> MainMenu84348881[arrowhead=none, arrowtail=empty, dir=both];
+Menu139615269 -> ServerClientSelection84348881[arrowhead=none, arrowtail=empty, dir=both];
+Server768600980 -> LobbyManagementServer133392053[arrowhead=none, arrowtail=empty, dir=both];
+StatusEffect1760371433 -> AbstractStatusEffect1760371433[arrowhead=none, arrowtail=empty, dir=both];
+StraightReach1373596050 -> Maxwell447650227[arrowhead=none, arrowtail=empty, dir=both];
+StraightReach1373596050 -> Pawn447650227[arrowhead=none, arrowtail=empty, dir=both];
+StraightReach1373596050 -> Queen447650227[arrowhead=none, arrowtail=empty, dir=both];
+StraightReach1373596050 -> Rook447650227[arrowhead=none, arrowtail=empty, dir=both];
+    
+}
+@enduml

@@ -5,18 +5,16 @@ import java.util.Map;
 import java.util.Random;
 
 import chess.ChessGame;
+import chess.Util;
 import chess.figure.FigureColor;
 import chess.network.GameStatus;
 import chess.network.api.Server;
-import chess.network.impl.packet.GameStatusPacket;
-import chess.network.impl.packet.InGamePacket;
-import chess.network.impl.packet.MovePacket;
-import chess.network.impl.packet.Packet;
-import chess.network.impl.packet.PreGamePacket;
-import chess.network.impl.packet.StartGamePacket;
+import chess.network.impl.exception.InvalidMessageException;
+import chess.network.impl.packet.*;
+import chess.network.impl.packet.packets.*;
 import chess.network.impl.server.NetworkAddress;
 
-public class LobbyHandler
+public class LobbyHandler extends Server
 {
 	public static final int PLAYER_COUNT = 2;
 	
@@ -28,15 +26,59 @@ public class LobbyHandler
 	private Map<NetworkAddress, FigureColor> clientColors = new HashMap<>();
 	private ChessGame game;
 	private boolean gameStarted = false;
-	
-	private Server server;
-	
-	public LobbyHandler(Server server)
+
+	NetworkAddress address;
+
+	public LobbyHandler(String ip, int port)
 	{
+		super(port);
+
+		this.address = new NetworkAddress(ip, port);
 		this.id = generateID();
 		this.game = new ChessGame();
-		this.server = server;
 	}
+
+	@Override
+	public void processNewConnection(String pClientIP, int pClientPort)
+	{
+
+	}
+
+	@Override
+	public void processMessage(String pClientIP, int pClientPort, String pMessage)
+	{
+		Util.printBytes(pMessage, System.err);
+
+		if(pMessage.isEmpty())
+			return; // Client sent empty packet
+
+		NetworkAddress addr = NetworkAddress.create(pClientIP, pClientPort);
+
+		int type = (int)pMessage.charAt(0);
+
+		if(!Packet.isType(type))
+			return; // Client sent packet with invalid type specification
+
+		Packet pck;
+
+		try
+		{
+			pck = Packet.create(type, pMessage.substring(1));
+		}
+		catch(InvalidMessageException e)
+		{
+			return; // Client sent package with correct type, but with incorrect data
+		}
+
+		handlePacket(addr, pck);
+	}
+
+	@Override
+	public void processClosingConnection(String pClientIP, int pClientPort)
+	{
+
+	}
+
 	public boolean join(NetworkAddress addr, FigureColor color)
 	{
 		if(this.clientColors.size() == PLAYER_COUNT)
@@ -81,24 +123,34 @@ public class LobbyHandler
 			return false;
 		else if(p instanceof PreGamePacket && gameStarted)
 			return false;
-		
+
+		if(p instanceof JoinLobbyPacket joinLobbyPacket)
+			return handleJoinLobbyPacket(addr, joinLobbyPacket);
 		if(p instanceof StartGamePacket startGamePacket)
 			return handleStartGamePacket(addr, startGamePacket);
 		if(p instanceof MovePacket movePacket)
 			return handleMovePacket(addr, movePacket);
-		
-		return false; // A packet that is not intended as client-to-server packet was sent to the server
+
+		System.err.println("Invalid packet type " + p.getClass().getName() + " received");
+		return false;
+	}
+	private boolean handleJoinLobbyPacket(NetworkAddress addr, JoinLobbyPacket pck)
+	{
+		return join(addr, pck.preferredColor);
 	}
 	private boolean handleStartGamePacket(NetworkAddress addr, StartGamePacket pck)
 	{
 		if(!addr.equals(this.host))
-			return false; // A client that is not the host of the lobby tried to start the game
-		
+		{
+			System.err.println("A client that is not the host tried to start the game.");
+			return false;
+		}
+
 		if(this.clientColors.size() == PLAYER_COUNT)
 			this.gameStarted = true;
 		
 		this.broadcastPacket(new GameStatusPacket(getGameStatus()));
-		
+
 		return true;
 	}
 	private GameStatus getGameStatus()
@@ -107,13 +159,31 @@ public class LobbyHandler
 	}
 	private boolean handleMovePacket(NetworkAddress addr, MovePacket pck)
 	{
-		return getClientColor(addr) == game.getActiveColor() ? game.tryMove(pck.srcX, pck.srcY, pck.tarX, pck.tarY) : false;
+		switch(pck.mode)
+		{
+			case MOVE:
+				return getClientColor(addr) == game.getActiveColor() ? game.tryMove(pck.srcX, pck.srcY, pck.tarX, pck.tarY) : false;
+			case INTERACT:
+				return getClientColor(addr) == game.getActiveColor() ? game.tryInteract(pck.srcX, pck.srcY, pck.tarX, pck.tarY) : false;
+			default:
+				System.err.println("Invalid move packet received (invalid InteractionType provided)");
+				return false; // Invalid interaction type
+		}
 	}
 	private void broadcastPacket(Packet p)
 	{
-		server.sendToAll((char)p.getType() + p.serialize());
+		sendToAll(p.serialize());
 	}
-	
+
+	public int getPort()
+	{
+		return address.port;
+	}
+	public String getIP()
+	{
+		return address.ip;
+	}
+
 	private static String generateID()
 	{
 		String str = "";

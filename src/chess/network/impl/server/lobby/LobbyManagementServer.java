@@ -6,9 +6,10 @@ import java.util.List;
 import chess.Util;
 import chess.network.api.Server;
 import chess.network.impl.exception.InvalidMessageException;
-import chess.network.impl.packet.JoinLobbyPacket;
 import chess.network.impl.packet.ManagementPacket;
 import chess.network.impl.packet.Packet;
+import chess.network.impl.packet.packets.LobbyDataPacket;
+import chess.network.impl.packet.packets.RequestLobbyPacket;
 import chess.network.impl.server.NetworkAddress;
 import chess.rendering.server.ServerGUI;
 
@@ -63,12 +64,12 @@ public class LobbyManagementServer extends Server
 		
 		if(pck instanceof ManagementPacket)
 		{
-			if(pck instanceof JoinLobbyPacket joinPck)
+			if(pck instanceof RequestLobbyPacket requestLobbyPck)
 			{
 				if(freeLobby == null)
 					freeLobby = createNewLobby();
-				
-				freeLobby.join(addr, joinPck.preferredColor);
+
+				this.sendPacket(addr, new LobbyDataPacket(freeLobby.getIP(), freeLobby.getPort()));
 			}
 		}
 		else
@@ -100,13 +101,20 @@ public class LobbyManagementServer extends Server
 				return handler;
 		return null;
 	}
+
+	private static int lastport = 420;
 	private LobbyHandler createNewLobby()
 	{
-		LobbyHandler handler = new LobbyHandler(this);
+		LobbyHandler handler = new LobbyHandler("localhost", ++lastport);
 		lobbyHandlers.add(handler);
 		return handler;
 	}
-	
+
+	private void sendPacket(NetworkAddress addr, Packet pck)
+	{
+		this.send(addr.ip, addr.port, pck.serialize());
+	}
+
 	public ServerGUI getGUI()
 	{
 		return gui;

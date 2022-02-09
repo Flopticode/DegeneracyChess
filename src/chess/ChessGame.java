@@ -15,7 +15,6 @@ public class ChessGame
 	
 	private Board board;
 	private FigureColor activeColor;
-	private ChessGUI gui;
 	private SoundManager soundManager;
 	
 	public ChessGame()
@@ -34,8 +33,6 @@ public class ChessGame
 			ioe.printStackTrace();
 			System.exit(1);
 		}
-		
-		this.gui = new ChessGUI(this);
 	}
 	
 	public boolean tryInteract(short x, short y, short tX, short tY)
@@ -83,10 +80,6 @@ public class ChessGame
 	public Board getBoard()
 	{
 		return this.board;
-	}
-	public ChessGUI getGUI()
-	{
-		return this.gui;
 	}
 	public FigureColor getActiveColor()
 	{

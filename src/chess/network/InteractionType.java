@@ -5,7 +5,7 @@ public enum InteractionType implements Serializable
 	MOVE(0),
 	INTERACT(1);
 	
-	private int id;
+	public final int id;
 	
 	private InteractionType(int id)
 	{
