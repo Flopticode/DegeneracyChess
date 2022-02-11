@@ -1,4 +1,7 @@
-package chess.network.impl.server;
+package chess.network;
+
+import java.net.IDN;
+import java.util.Objects;
 
 public class NetworkAddress
 {
@@ -16,7 +19,18 @@ public class NetworkAddress
 	{
 		return obj instanceof NetworkAddress && ((NetworkAddress)obj).ip.equals(ip) && ((NetworkAddress)obj).port == port;
 	}
-	
+
+	@Override
+	public String toString()
+	{
+		return ip + ":" + port;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(ip, port);
+	}
+
 	public static NetworkAddress create(String ip, int port)
 	{
 		return new NetworkAddress(ip, port);

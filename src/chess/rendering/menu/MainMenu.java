@@ -1,7 +1,7 @@
 package chess.rendering.menu;
 
 import chess.figure.FigureColor;
-import chess.network.impl.server.NetworkAddress;
+import chess.network.NetworkAddress;
 import chess.rendering.menu.api.Button;
 import chess.rendering.menu.api.ClickData;
 import chess.rendering.menu.api.Menu;

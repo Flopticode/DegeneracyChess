@@ -1,15 +1,14 @@
 package main;
 import javax.swing.JFrame;
 
-import chess.ChessGame;
 import chess.figure.FigureColor;
-import chess.network.ConnectionFailedException;
-import chess.network.impl.client.ChessClient;
-import chess.network.impl.client.ChessNetworkClient;
-import chess.network.impl.server.NetworkAddress;
-import chess.network.impl.server.lobby.LobbyHandler;
+import chess.ChessClient;
+import chess.network.NetworkAddress;
+import chess.network.impl.server.lobby.RemoteLobbyHandler;
 import chess.network.impl.server.lobby.LobbyManagementServer;
 import chess.rendering.menu.MainMenu;
+
+import java.io.IOException;
 
 public class Main
 {
@@ -34,7 +33,7 @@ public class Main
 			@Override
 			public void startServer()
 			{
-				LobbyManagementServer lobbyServer = new LobbyManagementServer();
+				LobbyManagementServer lobbyServer = new LobbyManagementServer(new NetworkAddress[] {new NetworkAddress("localhost", 420)});
 				FRAME.add("ServerGUI", lobbyServer.getGUI());
 				FRAME.remove(this);
 				FRAME.repaint(0, 0, 0, 500, 500);
@@ -62,16 +61,43 @@ public class Main
 			{
 				System.out.println("Local");
 
-				LobbyHandler handler = new LobbyHandler("localhost", 420);
-				ChessClient client = new ChessClient(), client2 = new ChessClient();
-				client.tryConnect(new NetworkAddress("localhost", 420), FigureColor.WHITE, false);
-				client2.tryConnect(new NetworkAddress("localhost", 420), FigureColor.BLACK, false);
+				try
+				{
+					RemoteLobbyHandler handler = new RemoteLobbyHandler("localhost", 420);
+					ChessClient client = new ChessClient(), client2 = new ChessClient();
+					client.tryConnect(new NetworkAddress("localhost", 420), FigureColor.WHITE, false);
 
-				client.tryStartGame();
+					try
+					{
+						Thread.sleep(1000);
+					}
+					catch(InterruptedException e)
+					{
+						e.printStackTrace();
+					}
 
-				FRAME.remove(this);
-				FRAME.add("LocalGUI", client.getGUI());
-				FRAME.repaint(0, 0, 500, 500);
+					client2.tryConnect(new NetworkAddress("localhost", 420), FigureColor.BLACK, false);
+
+					try
+					{
+						Thread.sleep(1000);
+					}
+					catch(InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+
+					client.tryStartGame();
+
+					FRAME.remove(this);
+					FRAME.add(client.getGUI());
+					FRAME.repaint(0, 0, 500, 500);
+				}
+				catch(IOException ioe)
+				{
+					System.err.println("Couldn't create LobbyHandler");
+					ioe.printStackTrace();
+				}
 			}
 		};
 		menu.setBounds(0, 0, 500, 500);

@@ -53,7 +53,7 @@ public class ClientGUI extends JPanel
 
 	public void updateGameStatus(GameStatus oldStatus, GameStatus newStatus)
 	{
-		if(oldStatus == GameStatus.LOBBY && newStatus == GameStatus.STARTED)
+		if((oldStatus == GameStatus.LOBBY || oldStatus == null) && newStatus == GameStatus.STARTED)
 		{
 			switchToView(ClientGUIView.GAME);
 		}

@@ -1,5 +1,6 @@
 package chess.network.impl.packet;
 
+import chess.Util;
 import chess.network.Serializable;
 import chess.network.impl.exception.InvalidMessageException;
 import chess.network.impl.packet.packets.GameStatusPacket;
@@ -11,11 +12,11 @@ import java.lang.reflect.InvocationTargetException;
 
 public interface Packet extends Serializable
 {
-	public static boolean isType(int type)
+	static boolean isType(int type)
 	{
 		return PacketRegistry.getClass(type) != null;
 	}
-	public static Packet create(int type, String data) throws InvalidMessageException
+	static Packet create(int type, String data) throws InvalidMessageException
 	{
 		Class<? extends AbstractPacket> clazz = PacketRegistry.getClass(type);
 
@@ -39,5 +40,9 @@ public interface Packet extends Serializable
 			System.out.println("\n\n");
 		}
 		return null;
+	}
+	static Packet create(String message) throws InvalidMessageException
+	{
+		return create(message.charAt(0), message.substring(1));
 	}
 }

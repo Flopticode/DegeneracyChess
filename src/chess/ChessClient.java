@@ -1,10 +1,10 @@
-package chess.network.impl.client;
+package chess;
 
-import chess.ChessGame;
 import chess.figure.FigureColor;
 import chess.network.ConnectionFailedException;
 import chess.network.GameStatus;
-import chess.network.impl.server.NetworkAddress;
+import chess.network.impl.client.ChessNetworkClient;
+import chess.network.NetworkAddress;
 import chess.rendering.client.ClientGUI;
 
 public class ChessClient
@@ -43,12 +43,12 @@ public class ChessClient
         System.out.println("New game status " + newStatus.toString() + ".");
         if(newStatus != currentGameStatus)
         {
-            currentGameStatus = newStatus;
-
             if(newStatus == GameStatus.STARTED)
                 initGame();
 
             gui.updateGameStatus(currentGameStatus, newStatus);
+
+            currentGameStatus = newStatus;
         }
     }
 

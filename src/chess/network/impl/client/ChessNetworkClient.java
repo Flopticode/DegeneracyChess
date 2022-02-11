@@ -1,5 +1,6 @@
 package chess.network.impl.client;
 
+import chess.UpdateGameStatusListener;
 import chess.Util;
 import chess.figure.FigureColor;
 import chess.network.ConnectionFailedException;
@@ -8,7 +9,7 @@ import chess.network.api.Client;
 import chess.network.impl.exception.InvalidMessageException;
 import chess.network.impl.packet.packets.*;
 import chess.network.impl.packet.Packet;
-import chess.network.impl.server.NetworkAddress;
+import chess.network.NetworkAddress;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -67,8 +68,6 @@ public class ChessNetworkClient extends Client
 	@Override
 	public void processMessage(String pMessage)
 	{
-		Util.printBytes(pMessage, System.err);
-		
 		Packet pck;
 			
 		try

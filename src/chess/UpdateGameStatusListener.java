@@ -1,4 +1,4 @@
-package chess.network.impl.client;
+package chess;
 
 import chess.network.GameStatus;
 

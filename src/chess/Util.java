@@ -20,10 +20,14 @@ public abstract class Util
 	{
 		return rand.nextInt(maxValue+1)+minValue;
 	}
-	public static void printBytes(String str, PrintStream out)
+	public static String getBytesString(String str, PrintStream out)
 	{
+		String s = "";
+
 		for(int i = 0; i < str.length(); i++)
-			out.print((int)str.charAt(i) + " ");
-		out.print("\n");
+			s += (int)str.charAt(i) + " ";
+		s += '\n';
+
+		return s;
 	}
 }
