@@ -1,7 +1,6 @@
 package chess.rendering.client.game;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -26,9 +25,6 @@ public class BoardRenderer
 		this.board = board;
 		this.chessRenderer = chessRenderer;
 		
-		Dimension prevMinSize = chessRenderer.getMinimumSize();
-		chessRenderer.setMinimumSize(new Dimension(Math.max(CELL_SIZE*board.getWidth(), prevMinSize.width), Math.max(CELL_SIZE*board.getHeight(), prevMinSize.height)));
-		
 		board.addChangedListener(this::onBoardChanged);
 		board.addStatusEffectAddedListener(this::onBoardStatusEffectAdded);
 		board.addStatusEffectRemovedListener(this::onBoardStatusEffectRemoved);
@@ -43,7 +39,7 @@ public class BoardRenderer
 		if(statusEffect.getType() == StatusEffectType.LIGHT_UNPLUGGED)
 		{
 			updateLightUnplugged();
-			this.chessRenderer.repaint();
+			Main.FRAME.repaint();
 		}
 	}
 	private void onBoardStatusEffectRemoved(StatusEffect statusEffect)
@@ -51,7 +47,7 @@ public class BoardRenderer
 		if(statusEffect.getType() == StatusEffectType.LIGHT_UNPLUGGED)
 		{
 			updateLightUnplugged();
-			this.chessRenderer.repaint();
+			Main.FRAME.repaint();
 		}
 	}
 	private void updateLightUnplugged()

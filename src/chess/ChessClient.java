@@ -3,21 +3,29 @@ package chess;
 import chess.figure.FigureColor;
 import chess.network.ConnectionFailedException;
 import chess.network.GameStatus;
-import chess.network.impl.client.ChessNetworkClient;
 import chess.network.NetworkAddress;
+import chess.network.impl.client.ChessNetworkRemoteClient;
 import chess.rendering.client.ClientGUI;
+import chess.rendering.client.LocalClientGUI;
 
 public class ChessClient
 {
     private ClientGUI gui;
-    private ChessNetworkClient network;
+    private ChessNetworkRemoteClient network;
     private GameStatus currentGameStatus = null;
     private ChessGame game;
 
-    public ChessClient()
+    public ChessClient(boolean isLocalGame)
     {
-        gui = new ClientGUI();
-        gui.addStartGameClickedListener(this::tryStartGame);
+    	if(isLocalGame)
+    	{
+    		gui = new LocalClientGUI();
+    	}
+    	else
+    	{
+    		gui = new ClientGUI();
+        	gui.addStartGameClickedListener(this::tryStartGame);
+    	}
     }
 
     public boolean tryConnect(NetworkAddress networkAddress, FigureColor prefColor)
@@ -28,7 +36,7 @@ public class ChessClient
     {
         try
         {
-            network = new ChessNetworkClient(networkAddress, prefColor, isConnectingToManagement);
+            network = new ChessNetworkRemoteClient(networkAddress, prefColor, isConnectingToManagement);
             network.addOnUpdateGameStatus(this::updateGameStatus);
             return true;
         }

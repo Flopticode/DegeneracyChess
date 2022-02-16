@@ -25,8 +25,6 @@ public class EffectTableRenderer
 	public EffectTableRenderer(ChessRenderer chessRenderer, Board board)
 	{
 		this.board = board;
-		
-		chessRenderer.requestSize(STATUS_EFFECT_RENDER_X + TABLE_WIDTH + 10, STATUS_EFFECT_RENDER_Y + TABLE_HEIGHT);
 	}
 	
 	public void render(Graphics g)

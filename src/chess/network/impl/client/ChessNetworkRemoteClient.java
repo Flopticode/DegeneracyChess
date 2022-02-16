@@ -1,25 +1,28 @@
 package chess.network.impl.client;
 
-import chess.UpdateGameStatusListener;
-import chess.Util;
-import chess.figure.FigureColor;
-import chess.network.ConnectionFailedException;
-import chess.network.GameStatus;
-import chess.network.api.Client;
-import chess.network.impl.exception.InvalidMessageException;
-import chess.network.impl.packet.packets.*;
-import chess.network.impl.packet.Packet;
-import chess.network.NetworkAddress;
-
 import java.util.LinkedList;
 import java.util.List;
 
-public class ChessNetworkClient extends Client
+import chess.UpdateGameStatusListener;
+import chess.figure.FigureColor;
+import chess.network.ConnectionFailedException;
+import chess.network.GameStatus;
+import chess.network.NetworkAddress;
+import chess.network.api.Client;
+import chess.network.impl.exception.InvalidMessageException;
+import chess.network.impl.packet.Packet;
+import chess.network.impl.packet.packets.GameStatusPacket;
+import chess.network.impl.packet.packets.JoinLobbyPacket;
+import chess.network.impl.packet.packets.LobbyDataPacket;
+import chess.network.impl.packet.packets.RequestLobbyPacket;
+import chess.network.impl.packet.packets.StartGamePacket;
+
+public class ChessNetworkRemoteClient extends Client implements ChessClient
 {
 	private List<UpdateGameStatusListener> updateGameStatusListeners = new LinkedList<>();
 	private FigureColor preferredColor;
 
-	public ChessNetworkClient(NetworkAddress serverAddr, FigureColor preferredColor, boolean isConnectingToManagement) throws ConnectionFailedException
+	public ChessNetworkRemoteClient(NetworkAddress serverAddr, FigureColor preferredColor, boolean isConnectingToManagement) throws ConnectionFailedException
 	{
 		super(serverAddr.ip, serverAddr.port);
 

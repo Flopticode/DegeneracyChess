@@ -1,6 +1,7 @@
 package chess.rendering.client;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
@@ -9,6 +10,7 @@ import chess.network.GameStatus;
 import chess.rendering.client.game.ChessGUI;
 import chess.rendering.menu.client.ClientMenu;
 import chess.rendering.menu.client.StartClickedListener;
+import main.Main;
 
 @SuppressWarnings("serial")
 public class ClientGUI extends JPanel
@@ -19,9 +21,9 @@ public class ClientGUI extends JPanel
 		GAME;
 	}
 
-	private ClientGUIView activeView = ClientGUIView.MENU;
-	private ClientMenu clientMenu;
-	private ChessGUI chessGUI;
+	protected ClientGUIView activeView = ClientGUIView.MENU;
+	protected ClientMenu clientMenu;
+	protected ChessGUI chessGUI;
 
 	public ClientGUI()
 	{
@@ -44,6 +46,7 @@ public class ClientGUI extends JPanel
 	private void switchToView(ClientGUIView view)
 	{
 		this.activeView = view;
+		Main.FRAME.repaint();
 	}
 
 	public void initGameView(ChessGame game)
@@ -53,19 +56,19 @@ public class ClientGUI extends JPanel
 
 	public void updateGameStatus(GameStatus oldStatus, GameStatus newStatus)
 	{
-		if((oldStatus == GameStatus.LOBBY || oldStatus == null) && newStatus == GameStatus.STARTED)
+		if(newStatus == GameStatus.STARTED)
 		{
 			switchToView(ClientGUIView.GAME);
 		}
 	}
 	
 	@Override
-	public void paintComponent(Graphics g)
+	public void paint(Graphics g)
 	{
 		if(activeView == ClientGUIView.MENU && clientMenu != null)
 			clientMenu.paint(g);
 		else if(activeView == ClientGUIView.GAME && chessGUI != null)
-			chessGUI.paintComponent(g);
+			chessGUI.paint(g);
 		else
 		{
 			g.setColor(Color.red);

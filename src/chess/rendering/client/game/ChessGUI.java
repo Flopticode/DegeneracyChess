@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 import chess.ChessGame;
+import main.Main;
 
 @SuppressWarnings("serial")
 public class ChessGUI extends JPanel implements MouseListener
@@ -21,12 +22,9 @@ public class ChessGUI extends JPanel implements MouseListener
 	
 	public ChessGUI(ChessGame game)
 	{
-		this.setBounds(0, 0, 500, 500);		
-		this.addMouseListener(this);
+		Main.FRAME.addMouseListener(this);
 		
 		this.renderer = new ChessRenderer(game.getBoard());
-		
-		repaint(0, 0, 0, 500, 500);
 		
 		this.game = game;
 	}
@@ -37,10 +35,9 @@ public class ChessGUI extends JPanel implements MouseListener
 	}
 	
 	@Override
-	public void paintComponent(Graphics g)
+	public void paint(Graphics g)
 	{
-		renderer.boardRenderer.render(g);
-		renderer.effectTableRenderer.render(g);
+		renderer.render(g);
 	}
 	
 	public ChessGame getGame()
@@ -57,14 +54,20 @@ public class ChessGUI extends JPanel implements MouseListener
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		lastPressedPt = e.getPoint();
+		Point pt = e.getPoint();
+		pt.translate(0, Main.FRAME_TITLE_BAR_HEIGHT);
+		
+		lastPressedPt = pt;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
+		Point pt = e.getPoint();
+		pt.translate(0, Main.FRAME_TITLE_BAR_HEIGHT);
+		
 		Point boardCoordsStart = renderer.boardRenderer.pixelToBoardCoords(this.lastPressedPt.x, this.lastPressedPt.y);
-		Point boardCoordsEnd = renderer.boardRenderer.pixelToBoardCoords(e.getPoint().x, e.getPoint().y);
+		Point boardCoordsEnd = renderer.boardRenderer.pixelToBoardCoords(pt.x, pt.y);
 		
 		switch(e.getButton())
 		{
