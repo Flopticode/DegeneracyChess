@@ -5,13 +5,10 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JPanel;
-
 import chess.ChessGame;
 import main.Main;
 
-@SuppressWarnings("serial")
-public class ChessGUI extends JPanel implements MouseListener
+public class ChessGUI implements MouseListener
 {
 	public static final String FRAME_TITLE = "Degeneracy - The Game";
 	
@@ -22,8 +19,6 @@ public class ChessGUI extends JPanel implements MouseListener
 	
 	public ChessGUI(ChessGame game)
 	{
-		Main.FRAME.addMouseListener(this);
-		
 		this.renderer = new ChessRenderer(game.getBoard());
 		
 		this.game = game;
@@ -34,7 +29,6 @@ public class ChessGUI extends JPanel implements MouseListener
 		return renderer;
 	}
 	
-	@Override
 	public void paint(Graphics g)
 	{
 		renderer.render(g);

@@ -1,20 +1,17 @@
 package chess.network.impl.server.lobby;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import chess.ChessGame;
 import chess.Util;
-import chess.figure.Figure;
 import chess.figure.FigureColor;
+import chess.network.NetworkAddress;
 import chess.network.api.Server;
 import chess.network.impl.exception.InvalidMessageException;
 import chess.network.impl.packet.ManagementPacket;
 import chess.network.impl.packet.Packet;
 import chess.network.impl.packet.packets.LobbyDataPacket;
 import chess.network.impl.packet.packets.RequestLobbyPacket;
-import chess.network.NetworkAddress;
 import chess.rendering.server.ServerGUI;
 
 public class LobbyManagementServer extends Server

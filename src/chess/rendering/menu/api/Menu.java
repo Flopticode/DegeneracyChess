@@ -9,10 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JPanel;
+import chess.rendering.GameWindow;
+import chess.rendering.GameWindowElement;
+import main.Main;
 
-@SuppressWarnings("serial")
-public class Menu extends JPanel implements MouseListener, MouseMotionListener
+public class Menu extends GameWindowElement implements MouseListener, MouseMotionListener
 {
 	private List<MenuElement> elements = new LinkedList<>();
 	private Map<String, Menu> subMenus = new HashMap<>();
@@ -20,12 +21,10 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
 	private Menu openMenu = null;
 	private Menu openedBy = null;
 	
-	public Menu(int x, int y, int width, int height)
+	public Menu(GameWindow window)
 	{
-		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
+		super(window);
 		
-		this.setBounds(x, y, width, height);
 	}
 	
 	public void add(MenuElement e)
@@ -101,11 +100,12 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
 	@Override
 	public void mouseClicked(MouseEvent evt)
 	{
+		System.out.println("Clicked");
 		if(this.openMenu != null)
 			openMenu.mouseClicked(evt);
 		else
 		{
-			ClickData data = new ClickData(evt.getX(), evt.getY(), evt.getButton());
+			ClickData data = new ClickData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT, evt.getButton());
 			for(MenuElement e : elements)
 				if(e instanceof Clickable c && e.isInBounds(data.x, data.y))
 					c.onClick(data);
@@ -115,11 +115,12 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
 	@Override
 	public void mousePressed(MouseEvent evt)
 	{
+		System.out.println("Pressed");
 		if(this.openMenu != null)
 			openMenu.mousePressed(evt);
 		else
 		{
-			ClickData data = new ClickData(evt.getX(), evt.getY(), evt.getButton());
+			ClickData data = new ClickData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT, evt.getButton());
 			for(MenuElement e : elements)
 				if(e instanceof Clickable c && e.isInBounds(data.x, data.y))
 					c.onPress(data);
@@ -129,11 +130,12 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
 	@Override
 	public void mouseReleased(MouseEvent evt)
 	{
+		System.out.println("Released");
 		if(this.openMenu != null)
 			openMenu.mouseReleased(evt);
 		else
 		{
-			ClickData data = new ClickData(evt.getX(), evt.getY(), evt.getButton());
+			ClickData data = new ClickData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT, evt.getButton());
 			for(MenuElement e : elements)
 				if(e instanceof Clickable c && e.isInBounds(data.x, data.y))
 					c.onRelease(data);
@@ -147,7 +149,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
 			openMenu.mouseMoved(evt);
 		else
 		{
-			MotionData data = new MotionData(evt.getX(), evt.getY());
+			MotionData data = new MotionData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT);
 			for(MenuElement e : elements)
 				e.onMotion(data);
 		}

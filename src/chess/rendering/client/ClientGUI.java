@@ -3,17 +3,16 @@ package chess.rendering.client;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import chess.ChessGame;
 import chess.network.GameStatus;
+import chess.rendering.GameWindow;
+import chess.rendering.GameWindowElement;
 import chess.rendering.client.game.ChessGUI;
 import chess.rendering.menu.client.ClientMenu;
 import chess.rendering.menu.client.StartClickedListener;
 import main.Main;
 
-@SuppressWarnings("serial")
-public class ClientGUI extends JPanel
+public class ClientGUI extends GameWindowElement
 {
 	public static enum ClientGUIView
 	{
@@ -25,13 +24,12 @@ public class ClientGUI extends JPanel
 	protected ClientMenu clientMenu;
 	protected ChessGUI chessGUI;
 
-	public ClientGUI()
+	public ClientGUI(GameWindow gameWindow)
 	{
-		this.setBounds(0, 0, 500, 500);
-
+		super(gameWindow);
+		
 		this.activeView = ClientGUIView.MENU;
-		this.clientMenu = new ClientMenu(0, 0, 500, 500);
-		this.add(clientMenu);
+		this.clientMenu = new ClientMenu(gameWindow);
 	}
 
 	public void addStartGameClickedListener(StartClickedListener l)
@@ -72,7 +70,7 @@ public class ClientGUI extends JPanel
 		else
 		{
 			g.setColor(Color.red);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.fillRect(0, 0, GameWindow.FRAME_WIDTH, GameWindow.FRAME_HEIGHT);
 		}
 	}
 }
