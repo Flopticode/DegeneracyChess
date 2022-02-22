@@ -30,5 +30,14 @@ public class Debussy extends Bishop implements DiagonalReach, AbstractInteractin
 	{
 		return isInMovementRange(tarX, tarY);
 	}
-	
+	@Override
+	public int getAttackStrength()
+	{
+		return 5;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 4;
+	}
 }

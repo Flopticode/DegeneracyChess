@@ -38,4 +38,14 @@ public class Queen extends AbstractFigure implements StraightReach, DiagonalReac
 		
 	}
 
+	@Override
+	public int getAttackStrength()
+	{
+		return 10;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 8;
+	}
 }

@@ -78,7 +78,8 @@ public class Maxwell extends AbstractFigure implements DiagonalReach, StraightRe
 
 	public boolean isInDryRange(short x, short y)
 	{
-		return Math.abs(x-this.x) + Math.abs(y-this.y) < MAXWELL_DRY_RANGE;
+		return x >= this.x-MAXWELL_DRY_RANGE && x <= this.y + MAXWELL_DRY_RANGE
+			&& y >= this.y-MAXWELL_DRY_RANGE && y <= this.y + MAXWELL_DRY_RANGE;
 	}
 	
 	@Override
@@ -118,5 +119,16 @@ public class Maxwell extends AbstractFigure implements DiagonalReach, StraightRe
 		while(board.getFigureByDirection(direction = Direction.get(Util.randomInt(0, 7)), 1) != null) { }
 		
 		this.move(direction, 1);*/
+	}
+
+	@Override
+	public int getAttackStrength()
+	{
+		return 11;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 9;
 	}
 }

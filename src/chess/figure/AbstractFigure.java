@@ -114,4 +114,6 @@ public abstract class AbstractFigure implements Figure
 	}
 	
 	public abstract void tick();
+	public abstract int getAttackStrength();
+	public abstract int getDefenseStrength();
 }

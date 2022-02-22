@@ -25,4 +25,14 @@ public class SystemIntegrator extends Knight
 			this.board.addStatusEffect(new LightUnpluggedStatusEffect(ROUNDS_LIGHT_UNPLUGGED));
 		}
 	}
+	@Override
+	public int getAttackStrength()
+	{
+		return 9;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 7;
+	}
 }

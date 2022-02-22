@@ -32,4 +32,15 @@ public class Rook extends AbstractFigure implements StraightReach
 		
 	}
 
+	@Override
+	public int getAttackStrength()
+	{
+		return 7;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 5;
+	}
+
 }

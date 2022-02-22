@@ -41,4 +41,14 @@ public class Pawn extends AbstractFigure implements StraightReach, DiagonalReach
 	{
 		
 	}
+	@Override
+	public int getAttackStrength()
+	{
+		return 3;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 2;
+	}
 }

@@ -32,5 +32,15 @@ public class Knight extends AbstractFigure
 	{
 		
 	}
+	@Override
+	public int getAttackStrength()
+	{
+		return 6;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 5;
+	}
 
 }

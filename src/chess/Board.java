@@ -183,7 +183,7 @@ public class Board
 		
 		if(tarFig != null)
 		{
-			if(Util.randomBoolean(ChessGame.FIGHT_BACK_PROBABILITY))
+			if(Util.randomInt(0, tarFig.getDefenseStrength()) > Util.randomInt(0, fig.getAttackStrength()))
 			{
 				this.destroyFigure(figureX, figureY);
 				this.setFigure(figureX, figureY, tarFig.getColor(), tarFig.getType());

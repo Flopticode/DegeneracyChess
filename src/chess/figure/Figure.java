@@ -19,4 +19,6 @@ public interface Figure
 	public void onDeath();
 	public short getDryState();
 	public boolean dry();
+	public int getAttackStrength();
+	public int getDefenseStrength();
 }

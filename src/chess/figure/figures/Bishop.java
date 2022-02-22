@@ -35,4 +35,14 @@ public class Bishop extends AbstractFigure implements DiagonalReach
 	{
 		
 	}
+	@Override
+	public int getAttackStrength()
+	{
+		return 5;
+	}
+	@Override
+	public int getDefenseStrength()
+	{
+		return 4;
+	}
 }
