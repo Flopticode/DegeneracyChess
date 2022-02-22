@@ -16,6 +16,7 @@ public class ServerClientSelection extends Menu
 		super(window);
 		
 		this.add(new Button(0, 0, 200, 150, "./images/ui/server_client_selection/server.png").addOnRelease(this::onServerClicked));
+		this.add(new Button(0, 0, 200, 150, "./images/ui/server_client_selection/management_server.png").addOnRelease(this::onManagementServerClicked));
 		this.add(new Button(0, 150, 200, 150, "./images/ui/server_client_selection/client.png").addOnRelease(this::onClientClicked));
 	}
 	
@@ -32,6 +33,14 @@ public class ServerClientSelection extends Menu
 		System.out.println("Client");
 		
 		((MainMenu)this.getParentMenu()).startClient(new NetworkAddress("10.101.4.78", LobbyManagementServer.PORT), FigureColor.BLACK);
+		
+		this.close();
+	}
+	private void onManagementServerClicked(ClickData data)
+	{
+		System.out.println("Management server");
+		
+		((MainMenu)this.getParentMenu()).startManagementServer();
 		
 		this.close();
 	}

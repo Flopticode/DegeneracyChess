@@ -1,9 +1,6 @@
 package chess.rendering.menu.api;
 
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +8,8 @@ import java.util.Map;
 
 import chess.rendering.GameWindow;
 import chess.rendering.GameWindowElement;
-import main.Main;
 
-public class Menu extends GameWindowElement implements MouseListener, MouseMotionListener
+public class Menu extends GameWindowElement
 {
 	private List<MenuElement> elements = new LinkedList<>();
 	private Map<String, Menu> subMenus = new HashMap<>();
@@ -98,14 +94,12 @@ public class Menu extends GameWindowElement implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent evt)
+	public void onMouseClick(ClickData data)
 	{
-		System.out.println("Clicked");
 		if(this.openMenu != null)
-			openMenu.mouseClicked(evt);
+			openMenu.onMouseClick(data);
 		else
 		{
-			ClickData data = new ClickData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT, evt.getButton());
 			for(MenuElement e : elements)
 				if(e instanceof Clickable c && e.isInBounds(data.x, data.y))
 					c.onClick(data);
@@ -113,14 +107,12 @@ public class Menu extends GameWindowElement implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mousePressed(MouseEvent evt)
+	public void onMousePress(ClickData data)
 	{
-		System.out.println("Pressed");
 		if(this.openMenu != null)
-			openMenu.mousePressed(evt);
+			openMenu.onMousePress(data);
 		else
 		{
-			ClickData data = new ClickData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT, evt.getButton());
 			for(MenuElement e : elements)
 				if(e instanceof Clickable c && e.isInBounds(data.x, data.y))
 					c.onPress(data);
@@ -128,14 +120,12 @@ public class Menu extends GameWindowElement implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent evt)
+	public void onMouseRelease(ClickData data)
 	{
-		System.out.println("Released");
 		if(this.openMenu != null)
-			openMenu.mouseReleased(evt);
+			openMenu.onMouseRelease(data);
 		else
 		{
-			ClickData data = new ClickData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT, evt.getButton());
 			for(MenuElement e : elements)
 				if(e instanceof Clickable c && e.isInBounds(data.x, data.y))
 					c.onRelease(data);
@@ -143,27 +133,14 @@ public class Menu extends GameWindowElement implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent evt)
+	public void onMouseMotion(MotionData data)
 	{
 		if(this.openMenu != null)
-			openMenu.mouseMoved(evt);
+			openMenu.onMouseMotion(data);
 		else
 		{
-			MotionData data = new MotionData(evt.getX(), evt.getY()+Main.FRAME_TITLE_BAR_HEIGHT);
 			for(MenuElement e : elements)
 				e.onMotion(data);
 		}
-	}
-	
-	@Override
-	public void mouseEntered(MouseEvent evt) { }
-
-	@Override
-	public void mouseExited(MouseEvent evt) { }
-
-	@Override
-	public void mouseDragged(MouseEvent evt)
-	{
-		this.mouseClicked(evt);
 	}
 }

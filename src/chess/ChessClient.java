@@ -7,6 +7,7 @@ import chess.network.NetworkAddress;
 import chess.network.impl.client.ChessNetworkRemoteClient;
 import chess.rendering.client.ClientGUI;
 import chess.rendering.client.LocalClientGUI;
+import main.Main;
 
 public class ChessClient
 {
@@ -19,11 +20,11 @@ public class ChessClient
     {
     	if(isLocalGame)
     	{
-    		gui = new LocalClientGUI();
+    		gui = new LocalClientGUI(Main.GAME_WINDOW);
     	}
     	else
     	{
-    		gui = new ClientGUI();
+    		gui = new ClientGUI(Main.GAME_WINDOW);
         	gui.addStartGameClickedListener(this::tryStartGame);
     	}
     }

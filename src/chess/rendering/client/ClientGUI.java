@@ -44,7 +44,7 @@ public class ClientGUI extends GameWindowElement
 	private void switchToView(ClientGUIView view)
 	{
 		this.activeView = view;
-		Main.FRAME.repaint();
+		Main.GAME_WINDOW.repaint();
 	}
 
 	public void initGameView(ChessGame game)

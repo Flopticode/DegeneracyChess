@@ -1,22 +1,19 @@
 package chess.network.impl.server.lobby;
 
-import chess.ChessGame;
-import chess.Util;
-import chess.figure.FigureColor;
-import chess.network.GameStatus;
-import chess.network.NetworkAddress;
-import chess.network.impl.exception.InvalidMessageException;
-import chess.network.impl.packet.Packet;
-import chess.network.impl.packet.packets.GameStatusPacket;
-import chess.network.impl.packet.packets.JoinLobbyPacket;
-import chess.network.impl.packet.packets.MovePacket;
-import chess.network.impl.packet.packets.StartGamePacket;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.ChessGame;
+import chess.figure.FigureColor;
+import chess.network.GameStatus;
+import chess.network.impl.packet.Packet;
+import chess.network.impl.packet.packets.GameStatusPacket;
+import chess.network.impl.packet.packets.MovePacket;
+import chess.network.impl.packet.packets.StartGamePacket;
+
 public abstract class LobbyHandler
 {
+	public static final int PORT = 420;
     public static final int MAX_PLAYER_COUNT = 2;
 
     private Map<Integer, FigureColor> clientIDColorMap = new HashMap<>();

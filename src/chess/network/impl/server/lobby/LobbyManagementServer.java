@@ -13,6 +13,7 @@ import chess.network.impl.packet.Packet;
 import chess.network.impl.packet.packets.LobbyDataPacket;
 import chess.network.impl.packet.packets.RequestLobbyPacket;
 import chess.rendering.server.ServerGUI;
+import main.Main;
 
 public class LobbyManagementServer extends Server
 {
@@ -68,10 +69,8 @@ public class LobbyManagementServer extends Server
 		}
 		private boolean canJoinPlayer(LobbyManagementPlayer player)
 		{
-			if(curPlayerCount >= LobbyHandler.MAX_PLAYER_COUNT)
+			if(isFull())
 				return false;
-
-			FigureColor playerColor = player.color;
 
 			for(LobbyManagementPlayer p : players)
 				if(player.color == p.color)
@@ -80,7 +79,7 @@ public class LobbyManagementServer extends Server
 		}
 		public boolean isFull()
 		{
-			return curPlayerCount < LobbyHandler.MAX_PLAYER_COUNT;
+			return curPlayerCount >= LobbyHandler.MAX_PLAYER_COUNT;
 		}
 		public int getPlayerCount()
 		{
@@ -98,7 +97,7 @@ public class LobbyManagementServer extends Server
 	public LobbyManagementServer(NetworkAddress[] gameServers)
 	{
 		super(PORT);
-		this.gui = new ServerGUI();
+		this.gui = new ServerGUI(Main.GAME_WINDOW);
 
 		this.gameServers = gameServers;
 
@@ -206,7 +205,6 @@ public class LobbyManagementServer extends Server
 		return null;
 	}
 
-	private static int lastport = 420;
 	private Lobby createNewLobby()
 	{
 		Lobby lobby = new Lobby(gameServers[Util.randomInt(0, gameServers.length-1)]);

@@ -7,7 +7,6 @@ import chess.rendering.menu.api.Button;
 import chess.rendering.menu.api.ClickData;
 import chess.rendering.menu.api.Menu;
 
-@SuppressWarnings("serial")
 public abstract class MainMenu extends Menu
 {
 	public static final int WIDTH = 400;
@@ -20,7 +19,7 @@ public abstract class MainMenu extends Menu
 		this.add(new Button(0, 0, 200, 150, "./images/ui/mainmenu/localgame.png").addOnRelease(this::onLocalGameClicked));
 		this.add(new Button(0, 150, 200, 150, "./images/ui/mainmenu/multiplayer.png").addOnRelease(this::onMultiplayerClicked));
 		
-		this.addMenu("ServerClientSelectionMenu", new ServerClientSelection(x, y, WIDTH, HEIGHT));
+		this.addMenu("ServerClientSelectionMenu", new ServerClientSelection(window));
 	}
 	
 	private void onLocalGameClicked(ClickData data)
@@ -33,6 +32,7 @@ public abstract class MainMenu extends Menu
 	}
 	
 	public abstract void startServer();
+	public abstract void startManagementServer();
 	public abstract void startClient(NetworkAddress serverAddr, FigureColor preferredColor);
 	public abstract void startLocal();
 }

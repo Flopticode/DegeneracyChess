@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import chess.ChessGame;
-import main.Main;
+import chess.rendering.GameWindow;
 
 public class ChessGUI implements MouseListener
 {
@@ -49,7 +49,7 @@ public class ChessGUI implements MouseListener
 	public void mousePressed(MouseEvent e)
 	{
 		Point pt = e.getPoint();
-		pt.translate(0, Main.FRAME_TITLE_BAR_HEIGHT);
+		pt.translate(0, GameWindow.FRAME_TITLE_BAR_HEIGHT);
 		
 		lastPressedPt = pt;
 	}
@@ -58,7 +58,7 @@ public class ChessGUI implements MouseListener
 	public void mouseReleased(MouseEvent e)
 	{
 		Point pt = e.getPoint();
-		pt.translate(0, Main.FRAME_TITLE_BAR_HEIGHT);
+		pt.translate(0, GameWindow.FRAME_TITLE_BAR_HEIGHT);
 		
 		Point boardCoordsStart = renderer.boardRenderer.pixelToBoardCoords(this.lastPressedPt.x, this.lastPressedPt.y);
 		Point boardCoordsEnd = renderer.boardRenderer.pixelToBoardCoords(pt.x, pt.y);

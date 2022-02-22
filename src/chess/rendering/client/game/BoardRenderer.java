@@ -32,14 +32,14 @@ public class BoardRenderer
 	
 	private void onBoardChanged(Board board, short x, short y, Figure fig)
 	{
-		Main.FRAME.repaint();
+		Main.GAME_WINDOW.repaint();
 	}
 	private void onBoardStatusEffectAdded(StatusEffect statusEffect)
 	{
 		if(statusEffect.getType() == StatusEffectType.LIGHT_UNPLUGGED)
 		{
 			updateLightUnplugged();
-			Main.FRAME.repaint();
+			Main.GAME_WINDOW.repaint();
 		}
 	}
 	private void onBoardStatusEffectRemoved(StatusEffect statusEffect)
@@ -47,7 +47,7 @@ public class BoardRenderer
 		if(statusEffect.getType() == StatusEffectType.LIGHT_UNPLUGGED)
 		{
 			updateLightUnplugged();
-			Main.FRAME.repaint();
+			Main.GAME_WINDOW.repaint();
 		}
 	}
 	private void updateLightUnplugged()

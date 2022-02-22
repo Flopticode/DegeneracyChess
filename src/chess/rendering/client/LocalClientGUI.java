@@ -4,10 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-@SuppressWarnings("serial")
+import chess.rendering.GameWindow;
+
 public class LocalClientGUI extends ClientGUI
 {
 	public static final Font FONT = new Font("Arial", 0, 40);
+
+	public LocalClientGUI(GameWindow gameWindow)
+	{
+		super(gameWindow);
+	}
 	
 	@Override
 	public void paint(Graphics g)
